@@ -18,7 +18,7 @@ const app = express()
 import cors from 'cors';
 app.use(cors());
 
-app.use("/", express.static(path.join(__dirname, "public")));
+app.use("/", express.static(path.join(import.meta.dirname, "public")));
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())

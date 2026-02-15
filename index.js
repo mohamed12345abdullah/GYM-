@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Logger from './utils/logger.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 dotenv.config();
 
 
@@ -18,7 +19,9 @@ const app = express()
 import cors from 'cors';
 app.use(cors());
 
-// app.use("/", express.static(path.join(import.meta.dirname, "public")));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use("/", express.static(path.join(__dirname, "public")));
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -60,11 +63,13 @@ app.use((err, req, res, next) => {
 
 
 
-// app.listen(process.env.PORT, () => {
-//     console.log(`Server is running on port ${process.env.PORT}`)
-//     console.log(`https//localhost:${process.env.PORT}`);
-    
-// })
+if (process.env.VERCEL !== '1') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+        console.log(`http://localhost:${PORT}`);
+    });
+}
 
 
 

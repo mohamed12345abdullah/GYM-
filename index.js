@@ -17,6 +17,7 @@ const app = express()
 import cors from 'cors';
 app.use(cors());
 
+app.use('/', express.static('public'))  
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -31,7 +32,6 @@ import authRouter from './auth/authRouter.js'
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 import fs from 'fs';
-app.use('/', express.static('public'))  
 
 
 

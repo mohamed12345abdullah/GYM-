@@ -14,7 +14,8 @@ connectDB();
 
 const app = express()
 
-
+import cors from 'cors';
+app.use(cors());
 
 
 app.use(bodyParser.urlencoded({ extended: true }))

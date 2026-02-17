@@ -1,15 +1,721 @@
-
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>نادي بكر لللياقة البدنية - تدريب احترافي</title>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Cairo (خط عربي حديث) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- AOS - مكتبة التمرير المتحرك -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0a0f1e;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* شريط التمرير المخصص */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1f2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #fbbf24, #d97706);
+            border-radius: 5px;
+        }
+
+        /* الهيدر */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 15, 30, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            text-decoration: none;
+            background: linear-gradient(135deg, #fff 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #fbbf24, #d97706);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #fbbf24;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links .cta-button {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            color: #0a0f1e;
+            padding: 0.6rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+        }
+        .nav-links .cta-button::after {
+            display: none;
+        }
+        .nav-links .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(251, 191, 36, 0.5);
+            color: #0a0f1e;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fbbf24;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* قسم البطل */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 8rem 2rem 4rem;
+            background: radial-gradient(circle at 70% 50%, rgba(251, 191, 36, 0.1) 0%, transparent 50%);
+        }
+
+        .hero .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            color: #0a0f1e;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 35px rgba(251, 191, 36, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-outline:hover {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            box-shadow: 0 30px 40px -20px rgba(0,0,0,0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* الأقسام العامة */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #cbd5e1;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        /* شبكة المميزات */
+        .features-grid, .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card, .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 2rem;
+            border-radius: 30px;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before, .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.1), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover, .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(251, 191, 36, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .feature-card:hover::before, .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon, .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3, .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p, .service-card p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        /* قسم عن المدرب */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+        .about-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 30px 40px -20px #000;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.03);
+            padding: 1.5rem;
+            border-radius: 20px;
+        }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+        .stat-label {
+            color: #cbd5e1;
+        }
+
+        /* الفوتر */
+        footer {
+            background: #050914;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #fbbf24;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: #fbbf24;
+            color: #0a0f1e;
+            transform: translateY(-3px);
+        }
+
+        .contact-info p {
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #cbd5e1;
+        }
+        .contact-info i {
+            color: #fbbf24;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 3rem;
+        }
+
+        /* استجابة الجوال */
+        @media (max-width: 992px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 15, 30, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-top: 1px solid rgba(255,255,255,0.05);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .contact-info p {
+                justify-content: center;
+            }
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* تأثيرات التمرير */
+        [data-aos] {
+            opacity: 0;
+            transition-property: opacity, transform;
+        }
+        [data-aos].aos-animate {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    hello world
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">بكر<span>جيم</span></a>
+            
+            <button class="mobile-menu-btn" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#features">خدماتنا</a></li>
+                <li><a href="#about">عن المدرب</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+                <li><a href="/login.html" class="cta-button">تسجيل الدخول</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-left">
+                <h1>حول جسمك <span>إلى تحفة فنية</span> مع الكوتش بكر</h1>
+                <p>تدريب شخصي احترافي، برامج تغذية مخصصة، ومتابعة مستمرة لتحقيق أهدافك الرياضية بأحدث الأساليب العلمية.</p>
+                <div class="hero-buttons">
+                    <a href="/login.html" class="btn-primary"><i class="fas fa-arrow-left"></i> ابدأ الآن</a>
+                    <a href="#features" class="btn-outline">تعرف على خدماتنا</a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-right" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="الكوتش بكر">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">لماذا <span>نادي بكر؟</span></h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">نقدم لك بيئة رياضية متكاملة بأحدث الإمكانيات لتحقق أقصى استفادة</p>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3>أحدث الأجهزة</h3>
+                    <p>أجهزة رياضية متطورة وعالية الجودة تناسب جميع المستويات</p>
+                </div>
+                
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="feature-icon"><i class="fas fa-user-graduate"></i></div>
+                    <h3>مدربون محترفون</h3>
+                    <p>كادر تدريبي معتمد دولياً بخبرات طويلة في مجال اللياقة</p>
+                </div>
+                
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="feature-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <h3>برامج مخصصة</h3>
+                    <p>خطط تدريب وتغذية مصممة حسب هدفك وقياسات جسمك</p>
+                </div>
+                
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                    <h3>بيئة محفزة</h3>
+                    <p>مجتمع رياضي داعم وأجواء إيجابية تساعدك على الاستمرار</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">خدماتنا <span>المتكاملة</span></h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">نوفر لك كل ما تحتاجه في رحلة لياقتك البدنية</p>
+            
+            <div class="services-grid">
+                <div class="service-card" data-aos="flip-right" data-aos-delay="200">
+                    <div class="service-icon"><i class="fas fa-dumbbell"></i></div>
+                    <h3>تدريب شخصي</h3>
+                    <p>جلسات فردية مع مدرب خاص يركز على أهدافك ويصحح أداءك</p>
+                </div>
+                
+                <div class="service-card" data-aos="flip-right" data-aos-delay="300">
+                    <div class="service-icon"><i class="fas fa-users"></i></div>
+                    <h3>تمارين جماعية</h3>
+                    <p>فصول حماسية (يوجا، زومبا، كروس فت) بروح الفريق</p>
+                </div>
+                
+                <div class="service-card" data-aos="flip-right" data-aos-delay="400">
+                    <div class="service-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>استشارات تغذية</h3>
+                    <p>برامج غذائية متكاملة مع متابعة من أخصائي تغذية</p>
+                </div>
+                
+                <div class="service-card" data-aos="flip-right" data-aos-delay="500">
+                    <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>متابعة مستمرة</h3>
+                    <p>تقييم دوري وتعديل البرامج حسب تقدمك</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">عن <span>المدرب بكر</span></h2>
+            <div class="about-grid">
+                <div class="about-image" data-aos="fade-left" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="المدرب بكر">
+                </div>
+                <div class="about-content" data-aos="fade-right" data-aos-delay="200">
+                    <h3>خبرة وشغف بلا حدود</h3>
+                    <p>بكر مدرب شخصي محترف، حاصل على شهادات دولية في علوم الرياضة والتغذية. بدأ رحلته منذ أكثر من 10 سنوات، وساعد أكثر من 500 عميل على تحقيق أهدافهم بطرق علمية وآمنة.</p>
+                    <p>يؤمن بأن النجاح يبدأ بخطة مخصصة تناسب كل فرد، ولذلك يضع برامج تدريبية وتغذوية فريدة تجمع بين العلم والالتزام.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">عميل</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">سنوات</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">20+</div>
+                            <div class="stat-label">شهادة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>بكرجيم</h3>
+                <p>نحن هنا لمساعدتك في تحقيق أهدافك الرياضية ببيئة احترافية وداعمة.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul style="list-style: none;">
+                    <li><a href="#home" style="color: #cbd5e1; text-decoration: none;">الرئيسية</a></li>
+                    <li><a href="#features" style="color: #cbd5e1; text-decoration: none;">خدماتنا</a></li>
+                    <li><a href="#about" style="color: #cbd5e1; text-decoration: none;">عن المدرب</a></li>
+                    <li><a href="/login.html" style="color: #cbd5e1; text-decoration: none;">تسجيل الدخول</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>معلومات الاتصال</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> +966 12 345 6789</p>
+                    <p><i class="fas fa-envelope"></i> info@bakrgym.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 نادي بكر لللياقة البدنية. جميع الحقوق محفوظة. تصميم وتطوير باحترافية</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // تهيئة مكتبة AOS للتمرير المتحرك
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // قائمة الجوال
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // إغلاق القائمة عند النقر على رابط
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // تغيير لون الهيدر عند التمرير
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 15, 30, 0.95)';
+            } else {
+                header.style.background = 'rgba(10, 15, 30, 0.8)';
+            }
+        });
+
+        // تمرير سلس للروابط
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

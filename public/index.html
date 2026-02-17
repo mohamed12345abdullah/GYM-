@@ -482,7 +482,47 @@
                 justify-content: center;
             }
         }
-
+/* تحسينات إضافية للاستجابة */
+@media (max-width: 576px) {
+    .hero {
+        padding: 6rem 1rem 2rem;
+    }
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+    .hero-content p {
+        font-size: 1rem;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-outline {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    .section-title {
+        font-size: 2rem;
+    }
+    .feature-card, .service-card {
+        padding: 1.5rem 1rem;
+    }
+    .about-stats {
+        grid-template-columns: 1fr;
+    }
+    .footer-section {
+        text-align: center;
+    }
+    .nav-links.active {
+        padding: 1rem;
+        gap: 1rem;
+    }
+    .nav-links a {
+        font-size: 1rem;
+    }
+}
         /* تأثيرات التمرير */
         [data-aos] {
             opacity: 0;

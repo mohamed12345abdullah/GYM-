@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile · Login & Change Password</title>
+    <title>Profile · My Exercises & Settings</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Font: Inter -->
@@ -23,9 +23,8 @@
             background-color: #f4f7fb;
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            padding: 1.5rem;
+            padding: 2rem 1rem;
         }
 
         :root {
@@ -39,9 +38,11 @@
             --accent-soft: #dbeafe;
             --danger: #ef4444;
             --success: #10b981;
+            --warning: #f59e0b;
             --shadow: 0 20px 30px -10px rgba(0,0,0,0.1);
             --input-bg: #ffffff;
             --placeholder: #94a3b8;
+            --tab-inactive: #f1f5f9;
         }
 
         body.dark {
@@ -55,9 +56,11 @@
             --accent-soft: #1e3a5f;
             --danger: #f87171;
             --success: #34d399;
+            --warning: #fbbf24;
             --shadow: 0 20px 30px -10px #00000080;
             --input-bg: #0f172a;
             --placeholder: #64748b;
+            --tab-inactive: #1e293b;
         }
 
         body {
@@ -66,11 +69,10 @@
         }
 
         .profile-container {
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
         }
 
-        /* theme toggle header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -148,7 +150,6 @@
             transform: translateX(26px);
         }
 
-        /* cards */
         .card {
             background: var(--surface);
             border-radius: 32px;
@@ -169,6 +170,15 @@
 
         .card h2 i {
             color: var(--accent);
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .form-group {
@@ -213,7 +223,6 @@
             gap: 0.5rem;
             box-shadow: 0 6px 14px var(--accent-soft);
             transition: all 0.2s;
-            width: 100%;
             justify-content: center;
         }
 
@@ -254,31 +263,18 @@
 
         .info-label {
             font-weight: 600;
-            width: 100px;
+            width: 120px;
             color: var(--text-primary);
         }
 
         .info-value {
             color: var(--text-secondary);
             word-break: break-word;
+            flex: 1;
         }
 
         .hidden {
             display: none;
-        }
-
-        .logout-btn {
-            margin-top: 1rem;
-            background: transparent;
-            border: 1.5px solid var(--danger);
-            color: var(--danger);
-            box-shadow: none;
-        }
-
-        .logout-btn:hover {
-            background: var(--danger-soft);
-            border-color: var(--danger);
-            color: var(--danger);
         }
 
         .notification {
@@ -321,14 +317,92 @@
         .flex-row {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            box-shadow: none;
+        }
+
+        .tab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .exercise-card {
+            background: var(--surface-hover);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 1.2rem;
+        }
+
+        .exercise-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .exercise-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .exercise-meta i {
+            color: var(--accent);
+            width: 18px;
+        }
+
+        .no-exercises {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 2rem;
         }
     </style>
 </head>
 <body>
     <div class="profile-container">
-        <!-- header with theme toggle -->
         <div class="header">
-            <h1><i class="fas fa-user-circle"></i> profile</h1>
+            <h1><i class="fas fa-user-circle"></i> my profile</h1>
             <div class="theme-switch">
                 <i class="fas fa-sun"></i>
                 <label class="switch">
@@ -339,13 +413,13 @@
             </div>
         </div>
 
-        <!-- login card (visible when not logged in) -->
+        <!-- Login card -->
         <div class="card" id="loginCard">
-            <h2><i class="fas fa-sign-in-alt"></i> Log in</h2>
+            <h2><i class="fas fa-sign-in-alt"></i> Log in with phone</h2>
             <form id="loginForm">
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="abdo123@example.com" required>
+                    <label>Phone number</label>
+                    <input type="tel" id="loginPhone" placeholder="01012345678" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -355,28 +429,38 @@
             </form>
         </div>
 
-        <!-- profile card (visible when logged in) -->
+        <!-- Profile card (logged in) -->
         <div class="card hidden" id="profileCard">
-            <h2><i class="fas fa-id-card"></i> Your profile</h2>
+            <h2><i class="fas fa-id-card"></i> Your information</h2>
             <div id="profileLoader" class="spinner"></div>
             <div id="profileContent" class="hidden">
+                <!-- Profile details -->
                 <div class="profile-info" id="profileInfo"></div>
 
-                <h3 style="margin: 1.5rem 0 1rem;"><i class="fas fa-key"></i> Change password</h3>
+                <!-- Settings: Change password -->
+                <h3><i class="fas fa-key"></i> Change password</h3>
                 <form id="changePasswordForm">
                     <div class="form-group">
                         <label>New password</label>
                         <input type="password" id="newPassword" placeholder="Enter new password" required>
                     </div>
-                    <div class="flex-row" style="gap: 0.8rem;">
-                        <button type="submit" id="changePwdBtn"><i class="fas fa-save"></i> Update password</button>
+                    <div class="flex-row">
+                        <button type="submit" id="changePwdBtn"><i class="fas fa-save"></i> Update</button>
                         <button type="button" id="logoutBtn" class="danger"><i class="fas fa-sign-out-alt"></i> Log out</button>
                     </div>
                 </form>
+
+                <!-- My Exercises section with tabs by muscle -->
+                <h3 style="margin-top: 2rem;"><i class="fas fa-dumbbell"></i> My exercises</h3>
+                <div id="exercisesLoader" class="spinner hidden"></div>
+                <div id="exercisesContainer" class="hidden">
+                    <div class="tabs" id="exerciseTabs"></div>
+                    <div id="tabContent"></div>
+                </div>
             </div>
         </div>
 
-        <!-- notification -->
+        <!-- Notification -->
         <div class="notification" id="notification">
             <i class="fas fa-check-circle" style="color: var(--success);"></i>
             <span id="notifMessage">Success</span>
@@ -385,12 +469,12 @@
 
     <script>
         (function() {
-            // API base – adjust if needed
-            // const API_BASE = "http://localhost:5000/";
             const API_BASE = "/";
             const AUTH_BASE = '/api/auth';
+            const USER_BASE = '/api/user';
 
-            let token = localStorage.getItem('token');  // retrieve stored token
+            let token = localStorage.getItem('token');
+            let currentUser = null; // store user data
 
             // DOM elements
             const loginCard = document.getElementById('loginCard');
@@ -399,16 +483,20 @@
             const profileContent = document.getElementById('profileContent');
             const profileInfo = document.getElementById('profileInfo');
             const loginForm = document.getElementById('loginForm');
-            const loginEmail = document.getElementById('loginEmail');
+            const loginPhone = document.getElementById('loginPhone');
             const loginPassword = document.getElementById('loginPassword');
             const logoutBtn = document.getElementById('logoutBtn');
             const changePasswordForm = document.getElementById('changePasswordForm');
             const newPassword = document.getElementById('newPassword');
             const notif = document.getElementById('notification');
             const notifMessage = document.getElementById('notifMessage');
-
-            // theme toggle
             const themeToggle = document.getElementById('themeToggle');
+
+            // Exercise elements
+            const exercisesLoader = document.getElementById('exercisesLoader');
+            const exercisesContainer = document.getElementById('exercisesContainer');
+            const exerciseTabs = document.getElementById('exerciseTabs');
+            const tabContent = document.getElementById('tabContent');
 
             // ---------- helpers ----------
             function showNotif(msg, isError = false) {
@@ -424,7 +512,6 @@
                 setTimeout(() => notif.classList.remove('show'), 3500);
             }
 
-            // apiCall with Authorization header if token exists
             async function apiCall(url, options = {}) {
                 const headers = {
                     'Content-Type': 'application/json',
@@ -446,52 +533,155 @@
                 }
             }
 
-            // escape HTML
             function escapeHtml(str) {
                 if (!str) return str;
                 return String(str).replace(/[&<>"]/g, function(m) {
-                    if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; if (m === '"') return '&quot;';
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    if (m === '"') return '&quot;';
                     return m;
                 });
             }
 
-            // render profile info
+            // Render profile details (all fields)
             function renderProfile(user) {
+                const sub = user.subscription || {};
+                const price = sub.price || user.price || '—';
+                const paid = sub.paied_amount || user.paied_amount || '—';
+                const remaining = sub.remaining_amount || user.remaining_amount || '—';
+                const start = sub.startDate ? new Date(sub.startDate).toLocaleDateString() : (user.startDate ? new Date(user.startDate).toLocaleDateString() : '—');
+                const end = sub.endDate ? new Date(sub.endDate).toLocaleDateString() : (user.endDate ? new Date(user.endDate).toLocaleDateString() : '—');
+
                 let html = `
                     <div class="info-row"><span class="info-label">ID</span><span class="info-value">${user._id || ''}</span></div>
                     <div class="info-row"><span class="info-label">Name</span><span class="info-value">${escapeHtml(user.name) || ''}</span></div>
                     <div class="info-row"><span class="info-label">Email</span><span class="info-value">${escapeHtml(user.email) || ''}</span></div>
+                    <div class="info-row"><span class="info-label">Phone</span><span class="info-value">${escapeHtml(user.phone) || ''}</span></div>
                     <div class="info-row"><span class="info-label">Age</span><span class="info-value">${user.age || ''}</span></div>
                     <div class="info-row"><span class="info-label">Gender</span><span class="info-value">${user.gender || ''}</span></div>
-                    <div class="info-row"><span class="info-label">Phone</span><span class="info-value">${escapeHtml(user.phone) || ''}</span></div>
+                    <div class="info-row"><span class="info-label">Weight</span><span class="info-value">${user.weight || '—'} kg</span></div>
+                    <div class="info-row"><span class="info-label">Height</span><span class="info-value">${user.height || '—'} cm</span></div>
+                    <div class="info-row"><span class="info-label">Price</span><span class="info-value">${price}</span></div>
+                    <div class="info-row"><span class="info-label">Paid</span><span class="info-value">${paid}</span></div>
+                    <div class="info-row"><span class="info-label">Remaining</span><span class="info-value">${remaining}</span></div>
+                    <div class="info-row"><span class="info-label">Start date</span><span class="info-value">${start}</span></div>
+                    <div class="info-row"><span class="info-label">End date</span><span class="info-value">${end}</span></div>
                     <div class="info-row"><span class="info-label">Role</span><span class="info-value">${user.role || 'user'}</span></div>
                 `;
                 profileInfo.innerHTML = html;
             }
 
-            // check token and load profile
+            // Load user's exercises and render tabs by muscle
+            async function loadUserExercises(userId) {
+                exercisesLoader.classList.remove('hidden');
+                exercisesContainer.classList.add('hidden');
+                try {
+                    const data = await apiCall(`${USER_BASE}/${userId}/exercises`);
+                    const exercises = data.exercises || [];
+                    renderExercisesByMuscle(exercises);
+                } catch (err) {
+                    // error already shown
+                    exercisesContainer.classList.add('hidden');
+                } finally {
+                    exercisesLoader.classList.add('hidden');
+                }
+            }
+
+            function renderExercisesByMuscle(exercises) {
+                if (!exercises.length) {
+                    exercisesContainer.innerHTML = '<p class="no-exercises">You have no exercises assigned yet.</p>';
+                    exercisesContainer.classList.remove('hidden');
+                    return;
+                }
+
+                // Collect all unique muscle groups from all exercises
+                const muscleSet = new Set();
+                exercises.forEach(ex => {
+                    if (ex.muscles && Array.isArray(ex.muscles)) {
+                        ex.muscles.forEach(m => muscleSet.add(m));
+                    } else if (typeof ex.muscles === 'string') {
+                        muscleSet.add(ex.muscles);
+                    }
+                });
+                const muscles = Array.from(muscleSet).sort();
+
+                // Create tabs
+                let tabsHtml = '';
+                let panesHtml = '';
+                muscles.forEach((muscle, index) => {
+                    const activeClass = index === 0 ? 'active' : '';
+                    tabsHtml += `<button class="tab-btn ${activeClass}" data-muscle="${muscle}">${muscle}</button>`;
+
+                    // Filter exercises that include this muscle
+                    const muscleExercises = exercises.filter(ex => {
+                        if (Array.isArray(ex.muscles)) return ex.muscles.includes(muscle);
+                        return ex.muscles === muscle;
+                    });
+
+                    let exercisesHtml = '';
+                    muscleExercises.forEach(ex => {
+                        exercisesHtml += `
+                            <div class="exercise-card">
+                                <h4>${escapeHtml(ex.name)}</h4>
+                                <p>${escapeHtml(ex.description) || ''}</p>
+                                <div class="exercise-meta">
+                                    <span><i class="fas fa-layer-group"></i> ${ex.sets || '—'} sets</span>
+                                    <span><i class="fas fa-repeat"></i> ${ex.repetitions || '—'} reps</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    panesHtml += `
+                        <div class="tab-pane ${activeClass}" id="tab-${muscle}">
+                            <div class="exercise-grid">
+                                ${exercisesHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                exerciseTabs.innerHTML = tabsHtml;
+                tabContent.innerHTML = panesHtml;
+
+                // Add click handlers for tabs
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const muscle = btn.dataset.muscle;
+                        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+                        document.getElementById(`tab-${muscle}`).classList.add('active');
+                    });
+                });
+
+                exercisesContainer.classList.remove('hidden');
+            }
+
+            // Load profile and then exercises
             async function loadProfile() {
                 if (!token) {
-                    // no token -> show login
                     loginCard.classList.remove('hidden');
                     profileCard.classList.add('hidden');
                     return;
                 }
-                // show profile card with loader
                 loginCard.classList.add('hidden');
                 profileCard.classList.remove('hidden');
                 profileLoader.classList.remove('hidden');
                 profileContent.classList.add('hidden');
+                exercisesContainer.classList.add('hidden');
 
                 try {
                     const data = await apiCall(`${AUTH_BASE}/verify-token`);
-                    // data.data contains user
                     const user = data.data;
+                    currentUser = user;
                     renderProfile(user);
                     profileLoader.classList.add('hidden');
                     profileContent.classList.remove('hidden');
+                    // Load exercises for this user
+                    await loadUserExercises(user._id);
                 } catch (err) {
-                    // token invalid/expired
                     localStorage.removeItem('token');
                     token = null;
                     loginCard.classList.remove('hidden');
@@ -500,26 +690,23 @@
                 }
             }
 
-            // ---------- login ----------
+            // ---------- login with phone ----------
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const email = loginEmail.value.trim();
+                const phone = loginPhone.value.trim();
                 const password = loginPassword.value;
-                if (!email || !password) return;
+                if (!phone || !password) return;
 
                 try {
                     const data = await apiCall(`${AUTH_BASE}/login`, {
                         method: 'POST',
-                        body: JSON.stringify({ email, password })
+                        body: JSON.stringify({ phone, password })
                     });
-                    // assume response contains token (adjust if needed)
-                    // from typical login response: { success, token, user? }
-                    // We'll use data.token
                     if (!data.token) throw new Error('No token received');
                     token = data.token;
                     localStorage.setItem('token', token);
                     showNotif('Login successful');
-                    await loadProfile();  // reload profile
+                    await loadProfile();
                     loginForm.reset();
                 } catch (err) {}
             });
@@ -528,6 +715,7 @@
             logoutBtn.addEventListener('click', () => {
                 localStorage.removeItem('token');
                 token = null;
+                currentUser = null;
                 loginCard.classList.remove('hidden');
                 profileCard.classList.add('hidden');
                 showNotif('Logged out');
@@ -541,17 +729,16 @@
 
                 try {
                     const data = await apiCall(`${AUTH_BASE}/change-password`, {
-                        method: 'POST', // or PATCH? based on example they used POST? we'll use POST as per description
+                        method: 'POST',
                         body: JSON.stringify({ password: newPass })
                     });
-                    // new token returned
                     if (data.token) {
                         token = data.token;
                         localStorage.setItem('token', token);
                     }
                     showNotif('Password changed successfully');
                     newPassword.value = '';
-                    // optionally refresh profile (token updated)
+                    // Reload profile to get fresh data (maybe token renewed)
                     await loadProfile();
                 } catch (err) {}
             });
@@ -573,7 +760,7 @@
                 applyTheme(false);
             }
 
-            // initial load: verify token if exists
+            // Initial load
             loadProfile();
         })();
     </script>

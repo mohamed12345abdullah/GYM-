@@ -2,6 +2,7 @@
 
 import asyncHandler from '../utils/asyncHandler.js';
 import User from '../users/userModel.js';
+import Exercise from '../Exercises/exerciseModel.js';
 import bcrypt from 'bcrypt';
 import * as jwt from '../middlewares/jwt.js';
 
@@ -49,7 +50,7 @@ const verifyToken=asyncHandler(async(req,res)=>{
     if(! decoded){
         throw new Error('Invalid token');
     }
-    const user=await User.findById(decoded.id,'-password');
+    const user=await User.findById(decoded.id,'-password').populate('exercises');
     if(!user){
         throw new Error('User not found');
     }

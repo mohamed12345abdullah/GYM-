@@ -33,8 +33,17 @@ app.use(bodyParser.json())
 
 import userRouter from './users/userRouter.js'
 import authRouter from './auth/authRouter.js'
-app.use('/api/user', userRouter);
+import exerciseRouter from './Exercises/exerciseRouter.js'
+
+app.use((req, res, next) => {
+    Logger.info(`${req.method} ${req.path}`);
+    next();
+});
+
+ 
+app.use('/api/user', userRouter) ;
 app.use('/api/auth', authRouter);
+app.use('/api/exercises', exerciseRouter);
 import fs from 'fs';
 
 
